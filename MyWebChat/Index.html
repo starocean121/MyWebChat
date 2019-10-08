@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- Socket CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+
+    <!--<script src="/socket.io/socket.io.js"></script>-->
 
 </head>
 <body>
@@ -33,30 +36,35 @@
 
         </div>
     </div>
-    <script>
-        $(() => {
-            $("#send").click(() => {
-                sendMessage({
-                    name: $("#name").val(),
-                    message: $("#message").val()
-                });
-            });
+
+
+
+    <script type="text/javascript">
+
+        //$(document).ready(function () {
+        //    alert("this is a test");
+        //});
+
+        //alert("this is a test");
+
+        $("#send").click(function(){
+            sendMessage({name: $("#name").val(), message: $("#message").val() });
             getMessages();
-        })
+        });
 
         function addMessages(message) {
-            $("#messages").append(`
-          <h4> ${message.name} </h4>
-          <p>  ${message.message} </p>`)
+            $("#messages").append('<h4> ${message.name} </h4><p>  ${message.message} </p>')
         };
 
         function getMessages() {
-            $.get('http://localhost:1337/messages', (data) => {
-                data.forEach(addMessages);
+            $.get('http://localhost:1337/messages', function(data) {
+                //data.forEach(addMessages);
+                alert(JSON.stringify(data));
             });
         };
 
         function sendMessage(message) {
+            alert(JSON.stringify(message));
             $.post('http://localhost:1337/messages', message)
         };
 
